@@ -4,6 +4,8 @@ import 'package:flutter_mvc/resources/color_schemes.g.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import '../controller/ThemeController.dart';
+
 class PageLogin extends StatelessWidget {
   RxBool isObscure = true.obs;
   RxBool isLoading = false.obs;
@@ -13,7 +15,7 @@ class PageLogin extends StatelessWidget {
   final senhaController = TextEditingController();
   final repetirSenhaController = TextEditingController();
   final UsuarioController _usuarioController = Get.find();
-
+  final ThemeController themeController = Get.find();
   PageLogin({Key? key}) : super(key: key);
 
   @override
@@ -23,13 +25,13 @@ class PageLogin extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           actions: [
-            IconButton(
-             onPressed: () => Get.changeThemeMode(Get.isDarkMode? ThemeMode.light: ThemeMode.dark),
-              icon: Icon(
-                Get.isDarkMode ? Icons.dark_mode : Icons.light_mode,
-                color: Get.isDarkMode ? Colors.white : Colors.black87,
-              )
-            )
+            Obx(() => IconButton(
+                onPressed: () => themeController.toggleTheme(),
+                icon: Icon(
+                  themeController.isDarkMode.value ? Icons.dark_mode : Icons.light_mode,
+                  color: themeController.isDarkMode.value ? Colors.white : Colors.black87,
+                )
+            ))
           ],
         ),
         body: Container(
