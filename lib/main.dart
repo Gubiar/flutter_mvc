@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mvc/controller/UsuarioController.dart';
 import 'package:flutter_mvc/resources/color_schemes.g.dart';
-import 'package:flutter_mvc/services/UsuarioServices.dart';
+import 'package:flutter_mvc/view/PageHome.dart';
 import 'package:flutter_mvc/view/PageLogin.dart';
 import 'package:get/get.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  Get.put(UsuarioController());
   runApp(const MyApp());
 }
 
@@ -15,8 +17,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    Get.put(UsuarioServices());
-
     return GetMaterialApp(
       title: 'Flutter MVC',
       debugShowCheckedModeBanner: false,
@@ -32,7 +32,8 @@ class MyApp extends StatelessWidget {
       ),
       themeMode: ThemeMode.system,
       getPages: [
-        GetPage(name: '/', page: () => const PageLogin()),
+        GetPage(name: '/', page: () => PageLogin()),
+        GetPage(name: '/PageHome', page: () => const PageHome()),
       ],
     );
   }
