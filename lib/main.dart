@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mvc/resources/color_schemes.g.dart';
+import 'package:flutter_mvc/services/UsuarioServices.dart';
 import 'package:flutter_mvc/view/PageLogin.dart';
 import 'package:get/get.dart';
 
@@ -14,7 +15,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    Get.put(UsuarioServices());
+
     return GetMaterialApp(
+      title: 'Flutter MVC',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: lightColorScheme,
@@ -25,6 +30,7 @@ class MyApp extends StatelessWidget {
         colorScheme: darkColorScheme,
         fontFamily: 'Roboto',
       ),
+      themeMode: ThemeMode.system,
       getPages: [
         GetPage(name: '/', page: () => const PageLogin()),
       ],
