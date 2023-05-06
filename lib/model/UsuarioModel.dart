@@ -14,7 +14,7 @@ class UsuarioModel extends GetxController {
   }
 
   void fromJson(Map<dynamic, dynamic> json) {
-    id = json['id'];
+    id = json['id'] != null ? int.tryParse(json['id'].toString()) : null;
     nome = json['nome'];
     dtNascimento = json['dtNascimento'] != null ? DateTime.parse(json['dtNascimento']) : null;
     email = json['email'];

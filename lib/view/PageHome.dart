@@ -7,6 +7,16 @@ class PageHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('PageHome'),
+        leading: IconButton(
+          onPressed: () => Get.offAndToNamed('/'),
+          icon: Icon(
+            Icons.exit_to_app,
+            color: Get.theme.colorScheme.primary,
+          ),
+        ),
+      ),
       body: Container(
         width: Get.width,
         height: Get.height,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mvc/controller/UsuarioController.dart';
+import 'package:flutter_mvc/resources/color_schemes.g.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
@@ -17,8 +18,6 @@ class PageLogin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -85,7 +84,7 @@ class PageLogin extends StatelessWidget {
                                           ? Icons.visibility
                                           : Icons.visibility_off,
                                       size: 20,
-                                      color: const Color(0xff231942),
+                                      color: Get.theme.colorScheme.primary,
                                     ),
                                     onPressed: () =>
                                     isObscure.value = !isObscure.value,
@@ -112,16 +111,16 @@ class PageLogin extends StatelessWidget {
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
-                            color: Get.isDarkMode ? Theme.of(context).primaryColorLight : Theme.of(context).primaryColorDark
+                            color: Get.theme.colorScheme.primary,
                           ),
-                          child: Obx(() => ((isLoading.value) ? const CircularProgressIndicator(
-                            color: Colors.white,
+                          child: Obx(() => ((isLoading.value) ? CircularProgressIndicator(
+                            color: Get.theme.colorScheme.onPrimary,
                             strokeWidth: 3,
 
-                          ) : const Text(
+                          ) : Text(
                             'Entrar',
                             style: TextStyle(
-                                color: Colors.white,
+                                color: Get.theme.colorScheme.onPrimary,
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600
                             ),
@@ -135,11 +134,11 @@ class PageLogin extends StatelessWidget {
 
                       TextButton(
                           onPressed: () => isLogin.value = false,
-                          child: const Text(
+                          child: Text(
                             "Não tem conta? Clique aqui",
                             style: TextStyle(
                               fontSize: 14.0,
-                              color: Colors.black87,
+                              color: Get.theme.colorScheme.primary,
                               fontWeight: FontWeight.w400,
                             ),
                           )
@@ -207,7 +206,7 @@ class PageLogin extends StatelessWidget {
                                           ? Icons.visibility
                                           : Icons.visibility_off,
                                       size: 20,
-                                      color: const Color(0xff231942),
+                                      color: Get.theme.colorScheme.primary,
                                     ),
                                     onPressed: () =>
                                     isObscure.value = !isObscure.value,
@@ -233,7 +232,7 @@ class PageLogin extends StatelessWidget {
                                           ? Icons.visibility
                                           : Icons.visibility_off,
                                       size: 20,
-                                      color: const Color(0xff231942),
+                                      color: Get.theme.colorScheme.primary,
                                     ),
                                     onPressed: () =>
                                     isObscure.value = !isObscure.value,
@@ -260,15 +259,15 @@ class PageLogin extends StatelessWidget {
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
-                            color: Get.isDarkMode ? Theme.of(context).primaryColorLight : Theme.of(context).primaryColorDark
+                            color: Get.theme.colorScheme.primary
                           ),
-                          child: Obx(() => ((isLoading.value) ? const CircularProgressIndicator(
-                            color: Colors.white,
+                          child: Obx(() => ((isLoading.value) ? CircularProgressIndicator(
+                            color: Get.theme.colorScheme.onPrimary,
                             strokeWidth: 3,
-                          ) : const Text(
+                          ) : Text(
                             'Cadastrar',
                             style: TextStyle(
-                                color: Colors.white,
+                                color: Get.theme.colorScheme.onPrimary,
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600
                             ),
@@ -282,11 +281,11 @@ class PageLogin extends StatelessWidget {
 
                       TextButton(
                           onPressed: () => isLogin.value = true,
-                          child: const Text(
+                          child: Text(
                             "Já é cadastrado? Faça o login",
                             style: TextStyle(
                               fontSize: 14.0,
-                              color: Colors.black87,
+                              color: Get.theme.colorScheme.primary,
                               fontWeight: FontWeight.w400,
                             ),
                           )
