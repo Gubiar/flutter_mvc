@@ -1,0 +1,59 @@
+name: flutter_mvc
+description: Exemple of flutter project with MVC (Model, View and Controller) architecture
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.19.6 <3.0.0'
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  get: ^4.6.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/icons/
+    - assets/images/
+
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto-Thin.ttf
+          weight: 100
+        - asset: assets/fonts/Roboto-ThinItalic.ttf
+          weight: 100
+          style: italic
+        - asset: assets/fonts/Roboto-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Roboto-LightItalic.ttf
+          weight: 300
+          style: italic
+        - asset: assets/fonts/Roboto-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Roboto-Italic.ttf
+          weight: 400
+          style: italic
+        - asset: assets/fonts/Roboto-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Roboto-MediumItalic.ttf
+          weight: 500
+          style: italic
+        - asset: assets/fonts/Roboto-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Roboto-BoldItalic.ttf
+          weight: 700
+          style: italic
+        - asset: assets/fonts/Roboto-Black.ttf
+          weight: 900
+        - asset: assets/fonts/Roboto-BlackItalic.ttf
+          weight: 900
+          style: italic
