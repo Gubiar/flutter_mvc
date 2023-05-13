@@ -13,7 +13,7 @@ class PageHome extends StatelessWidget {
       appBar: AppBar(
         title: const Text('PageHome'),
         leading: IconButton(
-          onPressed: () => Get.offAndToNamed('/'),
+          onPressed: () => Get.offAndToNamed('/PageLogin'),
           icon: Icon(
             Icons.exit_to_app,
             color: Get.theme.colorScheme.primary,

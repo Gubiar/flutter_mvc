@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UsuarioController extends GetxController {
-  Rx<UsuarioModel?> _usuarioModel = Rx<UsuarioModel?>(UsuarioModel());
+  final Rx<UsuarioModel?> _usuarioModel = Rx<UsuarioModel?>(UsuarioModel());
 
   // Método para carregar dados do usuário a partir do JSON
   void carregarUsuario(Map<dynamic, dynamic> json) {
@@ -33,7 +33,7 @@ class UsuarioController extends GetxController {
       Get.snackbar('login Inválido!', 'Preencha todos os campos');
       return false;
     } else {
-      Map<String, dynamic> retorno = await postLogin(email, senha);
+      Map<String, dynamic> retorno = await _postLogin(email, senha);
       if(retorno['success'] == "true") return true;
       Get.snackbar('Houve um erro', retorno['message'].toString());
       return false;
@@ -50,7 +50,7 @@ class UsuarioController extends GetxController {
     } else {
 
       String mapToSend = '{"name":"$nome","email":"$email","password":"$senha","confirmPassword":"$repetirSenha"}';
-      Map<String, dynamic> retorno = await postCadastro(mapToSend);
+      Map<String, dynamic> retorno = await _postCadastro(mapToSend);
 
       if(retorno['success'] == 'true'){
         Get.offAllNamed('/PageHome');
@@ -60,7 +60,7 @@ class UsuarioController extends GetxController {
     }
   }
 
-  Future<Map<String, dynamic>> postLogin(String login, String senha) async {
+  Future<Map<String, dynamic>> _postLogin(String login, String senha) async {
     String mapToSend = '{"email":"$login","password":"$senha"}';
     debugPrint('postLogin body $mapToSend');
 
@@ -100,7 +100,7 @@ class UsuarioController extends GetxController {
     }
   }
 
-  Future<Map<String, dynamic>> postCadastro(String mapToSend) async {
+  Future<Map<String, dynamic>> _postCadastro(String mapToSend) async {
     debugPrint('postCadastro body $mapToSend');
 
     try {
