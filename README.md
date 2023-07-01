@@ -1,5 +1,7 @@
 # flutter_mvc
 
+*Dart 3 ready*
+
 Example of flutter project with MVC (Model, View and Controller) architecture.
 
 ## Getting Started

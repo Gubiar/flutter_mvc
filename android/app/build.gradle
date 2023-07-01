@@ -60,6 +60,7 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+    namespace 'com.br.fluttermvc.flutter_mvc'
 }
 
 flutter {
