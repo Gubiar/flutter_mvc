@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-class ToDoModel extends GetxController {
+class ToDoObj extends GetxController {
   int? id;
   String? item;
   int? status;
@@ -8,7 +8,7 @@ class ToDoModel extends GetxController {
   DateTime? dataConclusao;
   DateTime? dataMaximaConclusao;
 
-  ToDoModel({Map<dynamic, dynamic>? json}){
+  ToDoObj({Map<dynamic, dynamic>? json}){
     if(json != null){
       fromJson(json);
     }

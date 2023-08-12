@@ -1,10 +1,15 @@
 name: flutter_mvc
 description: Example of flutter project with MVC (Model, View and Controller) architecture
+
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
   sdk: '>=3.0.5 <=4.0.0'
+
+isar_version: &isar_version 3.1.0+1 # define the version to be used
+
+
 dependencies:
   flutter:
     sdk: flutter
@@ -16,12 +21,17 @@ dependencies:
   flutter_svg: ^2.0.5
   flex_color_scheme: ^7.2.0
   intl: ^0.18.1
+  isar: *isar_version
+  isar_flutter_libs: *isar_version
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  isar_generator: *isar_version
   flutter_lints: ^2.0.0
+  build_runner: ^2.4.6
 
 flutter:
   uses-material-design: true

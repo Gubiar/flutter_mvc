@@ -1,6 +1,8 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mvc/controller/ToDoListController.dart';
-import 'package:flutter_mvc/model/ToDoModel.dart';
+import 'package:flutter_mvc/model/toDoModel/ToDoObj.dart';
 import 'package:get/get.dart';
 
 import '../controller/ThemeController.dart';
@@ -9,6 +11,28 @@ class PageHome extends StatelessWidget {
   final ThemeController themeController = Get.find();
   final ToDoListController toDoListController = Get.put(ToDoListController(), permanent: true);
   PageHome({Key? key}) : super(key: key);
+
+  final Color oddItemColor = Get.theme.colorScheme.secondary.withOpacity(0.05);
+  final Color evenItemColor = Get.theme.colorScheme.secondary.withOpacity(0.15);
+  final Color draggableItemColor = Get.theme.colorScheme.secondary;
+
+  Widget proxyDecorator(
+      Widget child, int index, Animation<double> animation) {
+    return AnimatedBuilder(
+      animation: animation,
+      builder: (BuildContext context, Widget? child) {
+        final double animValue = Curves.easeInOut.transform(animation.value);
+        final double elevation = lerpDouble(0, 6, animValue)!;
+        return Material(
+          elevation: elevation,
+          color: draggableItemColor,
+          shadowColor: draggableItemColor,
+          child: child,
+        );
+      },
+      child: child,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +43,7 @@ class PageHome extends StatelessWidget {
           onPressed: () => Get.offAndToNamed('/PageLogin'),
           icon: Icon(
             Icons.exit_to_app,
-            color: Get.theme.colorScheme.primary,
+            color: Get.theme.colorScheme.secondary,
           ),
         ),
         actions: [
@@ -38,6 +62,7 @@ class PageHome extends StatelessWidget {
             Obx(() => ReorderableListView.builder(
                 shrinkWrap: true,
                 physics: const ClampingScrollPhysics(),
+                proxyDecorator: proxyDecorator,
                 itemCount: toDoListController.toDoList!.length,
                 itemBuilder: (BuildContext context, int index) {
                   final item = toDoListController.toDoList![index];
@@ -67,19 +92,21 @@ class PageHome extends StatelessWidget {
     );
   }
 
-  Widget getToDoItemList(ToDoModel item) {
+  Widget getToDoItemList(ToDoObj item) {
     return Dismissible(
       key: Key(item.id!.toString()),
       onDismissed: (direction) {
         toDoListController.removerToDo(item);
-        Get.showSnackbar(
-          GetSnackBar(
-            title: "Item removido",
-            message: '${item.item} removido com sucesso',
-            icon: const Icon(Icons.delete_forever),
-            duration: const Duration(seconds: 3),
-          ),
-        );
+        if(!Get.isSnackbarOpen){
+          Get.showSnackbar(
+            GetSnackBar(
+              title: "Item removido",
+              message: '${item.item} removido com sucesso',
+              icon: const Icon(Icons.delete_forever),
+              duration: const Duration(seconds: 3),
+            ),
+          );
+        }
       },
       background: Container(color: Colors.red),
       child: ListTile(

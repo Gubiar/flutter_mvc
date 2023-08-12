@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter_mvc/model/ToDoModel.dart';
+import 'package:flutter_mvc/model/toDoModel/ToDoObj.dart';
 
 class ToDoListController extends GetxController {
-  RxList<ToDoModel> _toDoList = <ToDoModel>[].obs;
+  RxList<ToDoObj> _toDoList = <ToDoObj>[].obs;
   List<Map<String, dynamic>> statusList = [
     {
       "id": 1,
@@ -39,11 +39,11 @@ class ToDoListController extends GetxController {
 
   // Método para carregar dados do usuário a partir do JSON
   void inserirToDo(Map<dynamic, dynamic> json) {
-    _toDoList.add(ToDoModel(json: json));
+    _toDoList.add(ToDoObj(json: json));
   }
 
   // Remove o item passado por parâmetro
-  void removerToDo(ToDoModel item) {
+  void removerToDo(ToDoObj item) {
     _toDoList.remove(item);
   }
 
@@ -53,15 +53,15 @@ class ToDoListController extends GetxController {
   }
 
   // Atualiza toda a lista
-  void atualizarToDoList(List<ToDoModel> lista) {
+  void atualizarToDoList(List<ToDoObj> lista) {
     _toDoList.clear();
     _toDoList.value = List.from(lista);
   }
 
   // Retorna uma lista filtrada pelo status
-  List<ToDoModel> getListaPeloStatusId(int statusId) {
-    List<ToDoModel> aux = [];
-    for (ToDoModel cadaToDo in _toDoList.value) {
+  List<ToDoObj> getListaPeloStatusId(int statusId) {
+    List<ToDoObj> aux = [];
+    for (ToDoObj cadaToDo in _toDoList.value) {
       if (cadaToDo.status == statusId) {
         aux.add(cadaToDo);
       }
@@ -73,11 +73,11 @@ class ToDoListController extends GetxController {
     if (oldIndex < newIndex) {
       newIndex -= 1;
     }
-    final ToDoModel item = _toDoList.removeAt(oldIndex);
+    final ToDoObj item = _toDoList.removeAt(oldIndex);
     _toDoList.insert(newIndex, item);
   }
 
-  List<ToDoModel>? get toDoList => _toDoList.value;
+  List<ToDoObj>? get toDoList => _toDoList.value;
 
   void limparLista() {
     _toDoList.clear();
