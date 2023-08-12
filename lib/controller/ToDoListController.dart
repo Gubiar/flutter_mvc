@@ -42,30 +42,39 @@ class ToDoListController extends GetxController {
     _toDoList.add(ToDoModel(json: json));
   }
 
-  // Método para carregar dados do usuário a partir do JSON
+  // Remove o item passado por parâmetro
   void removerToDo(ToDoModel item) {
     _toDoList.remove(item);
   }
 
+  //Remove um item de acordo com o id
   void removerToDoPeloId(int id) {
     _toDoList.removeWhere((element) => element.id == id);
   }
 
-  // Método para atualizar os dados do usuário
+  // Atualiza toda a lista
   void atualizarToDoList(List<ToDoModel> lista) {
     _toDoList.clear();
     _toDoList.value = List.from(lista);
   }
 
-  // Método para atualizar os dados do usuário
+  // Retorna uma lista filtrada pelo status
   List<ToDoModel> getListaPeloStatusId(int statusId) {
     List<ToDoModel> aux = [];
-    for(ToDoModel cadaToDo in _toDoList.value){
-      if(cadaToDo.status == statusId){
+    for (ToDoModel cadaToDo in _toDoList.value) {
+      if (cadaToDo.status == statusId) {
         aux.add(cadaToDo);
       }
     }
     return aux;
+  }
+
+  void changeOrder(int oldIndex, int newIndex) {
+    if (oldIndex < newIndex) {
+      newIndex -= 1;
+    }
+    final ToDoModel item = _toDoList.removeAt(oldIndex);
+    _toDoList.insert(newIndex, item);
   }
 
   List<ToDoModel>? get toDoList => _toDoList.value;
@@ -73,5 +82,4 @@ class ToDoListController extends GetxController {
   void limparLista() {
     _toDoList.clear();
   }
-
 }

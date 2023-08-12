@@ -14,6 +14,8 @@ dependencies:
   http: ^1.1.0
   shared_preferences: ^2.1.0
   flutter_svg: ^2.0.5
+  flex_color_scheme: ^7.2.0
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:

@@ -11,7 +11,7 @@ class PageSplash extends StatefulWidget {
 }
 
 class _PageSplashState extends State<PageSplash> {
-
+  final ThemeController themeController = Get.find();
   @override
   void initState() {
     super.initState();
@@ -30,10 +30,10 @@ class _PageSplashState extends State<PageSplash> {
       height: Get.height,
       color: Get.theme.colorScheme.primary,
       alignment: Alignment.center,
-      child: Icon(
-        Icons.home_rounded,
-        color: Get.theme.colorScheme.onPrimary,
-        size: 100,
+      child: Image.asset(
+        themeController.isDarkMode.value ? 'assets/images/Flutter-MVC-logos_transparent.png' : 'assets/images/Flutter-MVC-logos_black.png',
+        width: Get.width * 0.75,
+        fit: BoxFit.contain,
       ),
     );
   }

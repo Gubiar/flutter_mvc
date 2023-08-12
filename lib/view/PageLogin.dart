@@ -46,9 +46,9 @@ class PageLogin extends StatelessWidget {
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      SvgPicture.asset(
-                        'assets/images/account.svg',
-                        width: Get.width * 0.4,
+                      Image.asset(
+                        themeController.isDarkMode.value ? 'assets/images/Flutter-MVC-logos_transparent.png' : 'assets/images/Flutter-MVC-logos_black.png',
+                        width: Get.width * 0.9,
                         fit: BoxFit.contain,
                       ),
                       const SizedBox(
