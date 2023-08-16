@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mvc/model/toDoModel/ToDoModel.dart';
 import 'package:get/get.dart';
-import 'package:flutter_mvc/model/toDoModel/ToDoObj.dart';
 
 class ToDoListController extends GetxController {
-  RxList<ToDoObj> _toDoList = <ToDoObj>[].obs;
+  final RxList<ToDo> _toDoList = <ToDo>[].obs;
   List<Map<String, dynamic>> statusList = [
     {
       "id": 1,
@@ -39,11 +39,19 @@ class ToDoListController extends GetxController {
 
   // Método para carregar dados do usuário a partir do JSON
   void inserirToDo(Map<dynamic, dynamic> json) {
-    _toDoList.add(ToDoObj(json: json));
+    ToDo aux = ToDo()
+    ..id = json["id"]
+    ..dataConclusao = json["dataConclusao"]
+    ..dataCriacao = json["dataCriacao"]
+    ..dataMaximaConclusao = json["dataMaximaConclusao"]
+    ..item = json["item"]
+    ..statusId = json["statusId"];
+
+    _toDoList.add(aux);
   }
 
   // Remove o item passado por parâmetro
-  void removerToDo(ToDoObj item) {
+  void removerToDo(ToDo item) {
     _toDoList.remove(item);
   }
 
@@ -53,16 +61,16 @@ class ToDoListController extends GetxController {
   }
 
   // Atualiza toda a lista
-  void atualizarToDoList(List<ToDoObj> lista) {
+  void atualizarToDoList(List<ToDo> lista) {
     _toDoList.clear();
     _toDoList.value = List.from(lista);
   }
 
   // Retorna uma lista filtrada pelo status
-  List<ToDoObj> getListaPeloStatusId(int statusId) {
-    List<ToDoObj> aux = [];
-    for (ToDoObj cadaToDo in _toDoList.value) {
-      if (cadaToDo.status == statusId) {
+  List<ToDo> getListaPeloStatusId(int statusId) {
+    List<ToDo> aux = [];
+    for (ToDo cadaToDo in _toDoList.value) {
+      if (cadaToDo.statusId == statusId) {
         aux.add(cadaToDo);
       }
     }
@@ -73,11 +81,11 @@ class ToDoListController extends GetxController {
     if (oldIndex < newIndex) {
       newIndex -= 1;
     }
-    final ToDoObj item = _toDoList.removeAt(oldIndex);
+    final ToDo item = _toDoList.removeAt(oldIndex);
     _toDoList.insert(newIndex, item);
   }
 
-  List<ToDoObj>? get toDoList => _toDoList.value;
+  List<ToDo>? get toDoList => _toDoList.value;
 
   void limparLista() {
     _toDoList.clear();

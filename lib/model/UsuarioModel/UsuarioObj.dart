@@ -1,13 +1,13 @@
 import 'package:get/get.dart';
 
-class UsuarioModel extends GetxController {
+class UsuarioObj extends GetxController {
   int? id;
   String? nome;
   DateTime? dtNascimento;
   String? email;
   String? token;
 
-  UsuarioModel({Map<dynamic, dynamic>? json}){
+  UsuarioObj({Map<dynamic, dynamic>? json}){
     if(json != null){
       fromJson(json);
     }

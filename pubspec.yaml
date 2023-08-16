@@ -23,6 +23,7 @@ dependencies:
   intl: ^0.18.1
   isar: *isar_version
   isar_flutter_libs: *isar_version
+  path_provider: ^2.1.0
 
 
 dev_dependencies:
