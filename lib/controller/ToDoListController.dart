@@ -39,6 +39,8 @@ class ToDoListController extends GetxController {
     },
   ];
 
+  List<ToDo>? get toDoList => _toDoList.value; //public getter
+
   Future<void> getToDoFromDB() async {
     final DatabaseController databaseController = Get.find();
     _toDoList.clear();
@@ -57,25 +59,57 @@ class ToDoListController extends GetxController {
     ..statusId = json["statusId"];
 
     final DatabaseController databaseController = Get.find();
+    late int id;
+
     await databaseController.isar!.writeTxn(() async {
-      await databaseController.isar!.toDos.put(aux);
+      id = await databaseController.isar!.toDos.put(aux);
     });
-    getToDoFromDB(); //atualiza a lista
+
+    aux.id = id;
+    _toDoList.add(aux);
+  }
+
+  Future<void> removeToDoDB(int id) async {
+    final DatabaseController databaseController = Get.find();
+
+    await databaseController.isar!.writeTxn(() async {
+      final success = await databaseController.isar!.toDos.delete(id);
+      debugPrint('ToDo apagada: $success');
+    });
+  }
+
+  Future<void> limparToDoDB() async {
+    final DatabaseController databaseController = Get.find();
+
+    await databaseController.isar!.writeTxn(() async {
+      int totalDeleted = await databaseController.isar!.toDos.where().deleteAll();
+      debugPrint('ToDos apagadas: $totalDeleted');
+    });
   }
 
   // Remove o item passado por parâmetro
-  void removerToDo(ToDo item) {
+  Future<void> removerToDo(ToDo item) async {
+    await removeToDoDB(item.id);
     _toDoList.remove(item);
   }
 
   //Remove um item de acordo com o id
-  void removerToDoPeloId(int id) {
+  Future<void> removerToDoPeloId(int id) async {
+    await removeToDoDB(id);
     _toDoList.removeWhere((element) => element.id == id);
   }
 
   // Atualiza toda a lista
-  void atualizarToDoList(List<ToDo> lista) {
+  Future<void> atualizarToDoList(List<ToDo> lista) async {
     _toDoList.clear();
+    await limparToDoDB();
+
+    final DatabaseController databaseController = Get.find();
+
+    await databaseController.isar!.writeTxn(() async {
+      await databaseController.isar!.toDos.putAll(lista);
+    });
+
     _toDoList.value = List.from(lista);
   }
 
@@ -90,7 +124,9 @@ class ToDoListController extends GetxController {
     return aux;
   }
 
-  void changeOrder(int oldIndex, int newIndex) {
+  Future<void> changeOrder(int oldIndex, int newIndex) async {
+    await changeOrderDB(_toDoList[oldIndex].id, _toDoList[newIndex].id);
+
     if (oldIndex < newIndex) {
       newIndex -= 1;
     }
@@ -98,9 +134,34 @@ class ToDoListController extends GetxController {
     _toDoList.insert(newIndex, item);
   }
 
-  List<ToDo>? get toDoList => _toDoList.value;
+  //será feito update nos item, o conteudo de
+  // cada um será alterado no outro e vise-versa (sem mudar o id)
+  //Assim, o conteudo de cada item trocara de posicao
+  Future<bool> changeOrderDB(int oldId, int newId) async {
+    final DatabaseController databaseController = Get.find();
 
-  void limparLista() {
+    ToDo? item1 = await databaseController.isar!.toDos.get(oldId);
+    ToDo? item2 = await databaseController.isar!.toDos.get(newId);
+
+    if (item1 == null || item2 == null) {
+      return false;
+    }
+
+    int idItem1 = item1.id;
+
+    // Trocar as posições diretamente nos objetos
+    item1.id = item2.id;
+    item2.id = idItem1;
+
+    // Atualizar os itens no banco de dados
+    await databaseController.isar!.toDos.put(item1);
+    await databaseController.isar!.toDos.put(item2);
+
+    return true;
+  }
+
+  Future<void> limparLista() async {
+    await limparToDoDB();
     _toDoList.clear();
   }
 }

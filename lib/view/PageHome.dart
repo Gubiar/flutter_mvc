@@ -38,6 +38,16 @@ class PageHome extends StatelessWidget {
     );
   }
 
+  final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
+    foregroundColor: Get.theme.colorScheme.onPrimary,
+    backgroundColor: Get.theme.colorScheme.primary,
+    minimumSize: const Size(120, 40),
+    alignment: Alignment.center,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(40)),
+    ),
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,55 +74,49 @@ class PageHome extends StatelessWidget {
         ],
       ),
       body: SingleChildScrollView(
+        padding: EdgeInsets.only(bottom: 140),
+        controller: scrollController,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Obx(() => ReorderableListView.builder(
-                scrollController: scrollController,
                 shrinkWrap: true,
                 physics: const ClampingScrollPhysics(),
                 proxyDecorator: proxyDecorator,
                 itemCount: toDoListController.toDoList!.length,
+                padding: EdgeInsets.zero,
                 itemBuilder: (BuildContext context, int index) {
                   final item = toDoListController.toDoList![index];
                   return getToDoItemList(item);
                 },
                 onReorder: (int oldIndex, int newIndex) =>
                     toDoListController.changeOrder(oldIndex, newIndex))),
-
-            const SizedBox(height: 60), //Padding bottom
           ],
         ),
       ),
-      floatingActionButton: InkWell(
-        onTap: () async {
+      floatingActionButton:   ElevatedButton(
+        style: raisedButtonStyle,
+        onPressed: () async {
           int id = toDoListController.toDoList!.length + 1;
 
           await toDoListController.inserirToDo({
             "id": DateTime.now().millisecondsSinceEpoch,
             "item": "Item $id",
-            "status": 1,
+            "statusId": 1,
             "dataCriacao": DateTime.now(),
             "dataConclusao": DateTime.now().add(const Duration(days: 3)),
             "dataMaximaConclusao": DateTime.now().add(const Duration(days: 7))
           });
 
-          scrollController.animateTo(
+          await scrollController.animateTo(
             scrollController.position.maxScrollExtent,
-            duration: Duration(milliseconds: 300),
-            curve: Curves.fastOutSlowIn,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.ease,
           );
         },
-        child: Container(
-          padding:
-              const EdgeInsets.only(left: 40, right: 40, top: 20, bottom: 20),
-          decoration: BoxDecoration(
-              color: Get.theme.colorScheme.primary,
-              borderRadius: BorderRadius.circular(40)),
-          child: Text(
-            'Adicionar',
-            style: TextStyle(color: Get.theme.colorScheme.onPrimary),
-          ),
+        child: Text(
+          'Adicionar',
+          style: TextStyle(color: Get.theme.colorScheme.onPrimary),
         ),
       ),
     );
