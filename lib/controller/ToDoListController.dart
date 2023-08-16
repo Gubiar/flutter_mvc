@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mvc/controller/DatabaseController.dart';
 import 'package:flutter_mvc/model/toDoModel/ToDoModel.dart';
 import 'package:get/get.dart';
+import 'package:isar/isar.dart';
 
 class ToDoListController extends GetxController {
   final RxList<ToDo> _toDoList = <ToDo>[].obs;
@@ -37,8 +39,15 @@ class ToDoListController extends GetxController {
     },
   ];
 
+  Future<void> getToDoFromDB() async {
+    final DatabaseController databaseController = Get.find();
+    _toDoList.clear();
+    List<ToDo?> aux = await databaseController.isar!.toDos.where().findAll();
+    _toDoList.value = List.from(aux);
+  }
+
   // Método para carregar dados do usuário a partir do JSON
-  void inserirToDo(Map<dynamic, dynamic> json) {
+  Future<void> inserirToDo(Map<dynamic, dynamic> json) async {
     ToDo aux = ToDo()
     ..id = json["id"]
     ..dataConclusao = json["dataConclusao"]
@@ -47,7 +56,11 @@ class ToDoListController extends GetxController {
     ..item = json["item"]
     ..statusId = json["statusId"];
 
-    _toDoList.add(aux);
+    final DatabaseController databaseController = Get.find();
+    await databaseController.isar!.writeTxn(() async {
+      await databaseController.isar!.toDos.put(aux);
+    });
+    getToDoFromDB(); //atualiza a lista
   }
 
   // Remove o item passado por parâmetro

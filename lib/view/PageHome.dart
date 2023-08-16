@@ -12,11 +12,14 @@ class PageHome extends StatelessWidget {
   final ThemeController themeController = Get.find();
   final ToDoListController toDoListController =
       Get.put(ToDoListController(), permanent: true);
-  PageHome({Key? key}) : super(key: key);
+  PageHome({super.key}) {
+    toDoListController.getToDoFromDB();
+  }
 
   final Color oddItemColor = Get.theme.colorScheme.secondary.withOpacity(0.05);
   final Color evenItemColor = Get.theme.colorScheme.secondary.withOpacity(0.15);
   final Color draggableItemColor = Get.theme.colorScheme.secondary;
+  final ScrollController scrollController = ScrollController();
 
   Widget proxyDecorator(Widget child, int index, Animation<double> animation) {
     return AnimatedBuilder(
@@ -65,6 +68,7 @@ class PageHome extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Obx(() => ReorderableListView.builder(
+                scrollController: scrollController,
                 shrinkWrap: true,
                 physics: const ClampingScrollPhysics(),
                 proxyDecorator: proxyDecorator,
@@ -75,25 +79,40 @@ class PageHome extends StatelessWidget {
                 },
                 onReorder: (int oldIndex, int newIndex) =>
                     toDoListController.changeOrder(oldIndex, newIndex))),
-            InkWell(
-              onTap: () {
-                int id = toDoListController.toDoList!.length + 1;
-
-                toDoListController.inserirToDo({
-                  "id": DateTime.now().millisecondsSinceEpoch,
-                  "item": "Item $id",
-                  "status": 1,
-                  "dataCriacao": DateTime.now(),
-                  "dataConclusao": DateTime.now().add(const Duration(days: 3)),
-                  "dataMaximaConclusao":
-                      DateTime.now().add(const Duration(days: 7))
-                });
-              },
-              child: Text('Adicionar'),
-            ),
 
             const SizedBox(height: 60), //Padding bottom
           ],
+        ),
+      ),
+      floatingActionButton: InkWell(
+        onTap: () async {
+          int id = toDoListController.toDoList!.length + 1;
+
+          await toDoListController.inserirToDo({
+            "id": DateTime.now().millisecondsSinceEpoch,
+            "item": "Item $id",
+            "status": 1,
+            "dataCriacao": DateTime.now(),
+            "dataConclusao": DateTime.now().add(const Duration(days: 3)),
+            "dataMaximaConclusao": DateTime.now().add(const Duration(days: 7))
+          });
+
+          scrollController.animateTo(
+            scrollController.position.maxScrollExtent,
+            duration: Duration(milliseconds: 300),
+            curve: Curves.fastOutSlowIn,
+          );
+        },
+        child: Container(
+          padding:
+              const EdgeInsets.only(left: 40, right: 40, top: 20, bottom: 20),
+          decoration: BoxDecoration(
+              color: Get.theme.colorScheme.primary,
+              borderRadius: BorderRadius.circular(40)),
+          child: Text(
+            'Adicionar',
+            style: TextStyle(color: Get.theme.colorScheme.onPrimary),
+          ),
         ),
       ),
     );

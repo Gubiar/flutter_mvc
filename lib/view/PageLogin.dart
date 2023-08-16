@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mvc/controller/DatabaseController.dart';
 import 'package:flutter_mvc/controller/UsuarioController.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -15,6 +16,9 @@ class PageLogin extends StatelessWidget {
   final repetirSenhaController = TextEditingController();
   final UsuarioController _usuarioController = Get.find();
   final ThemeController themeController = Get.find();
+  final DatabaseController databaseController = Get.find();
+
+
   PageLogin({Key? key}) : super(key: key);
 
   @override
@@ -103,6 +107,7 @@ class PageLogin extends StatelessWidget {
                           bool loginValido = await _usuarioController.fazerLogin(email: emailController.text, senha: senhaController.text);
                           isLoading.value = false;
                           if (loginValido) {
+                            await databaseController.initDB();
                             Get.offAllNamed('/PageHome');
                           }
                         },

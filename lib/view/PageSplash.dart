@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mvc/controller/DatabaseController.dart';
 import 'package:flutter_mvc/controller/ThemeController.dart';
 import 'package:flutter_mvc/controller/UsuarioController.dart';
 import 'package:get/get.dart';
@@ -12,6 +13,9 @@ class PageSplash extends StatefulWidget {
 
 class _PageSplashState extends State<PageSplash> {
   final ThemeController themeController = Get.find();
+  final DatabaseController databaseController = Get.put(DatabaseController(), permanent: true);
+
+  
   @override
   void initState() {
     super.initState();
