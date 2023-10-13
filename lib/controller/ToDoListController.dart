@@ -154,8 +154,10 @@ class ToDoListController extends GetxController {
     item2.id = idItem1;
 
     // Atualizar os itens no banco de dados
-    await databaseController.isar!.toDos.put(item1);
-    await databaseController.isar!.toDos.put(item2);
+    await databaseController.isar!.writeTxn(() async {
+      await databaseController.isar!.toDos.put(item1);
+      await databaseController.isar!.toDos.put(item2);
+    });
 
     return true;
   }
