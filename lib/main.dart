@@ -7,15 +7,16 @@ import 'package:flutter_mvc/view/PageLogin.dart';
 import 'package:flutter_mvc/view/PageSplash.dart';
 import 'package:get/get.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   Get.put(UsuarioController());
   Get.put(ThemeController());
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   // This widget is the root of your application.
   @override

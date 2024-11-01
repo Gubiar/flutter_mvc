@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_mvc/controller/Controller.dart';
-import 'package:flutter_mvc/model/UsuarioModel/UsuarioObj.dart';
+import 'package:flutter_mvc/data/model/UsuarioModel/UsuarioObj.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';

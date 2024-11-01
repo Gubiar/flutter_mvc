@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mvc/controller/DatabaseController.dart';
 import 'package:flutter_mvc/controller/ThemeController.dart';
-import 'package:flutter_mvc/controller/UsuarioController.dart';
+import 'package:flutter_mvc/data/database.dart';
 import 'package:get/get.dart';
 
 class PageSplash extends StatefulWidget {
-  const PageSplash({Key? key}) : super(key: key);
+  const PageSplash({super.key});
 
   @override
   State<PageSplash> createState() => _PageSplashState();
@@ -13,7 +12,6 @@ class PageSplash extends StatefulWidget {
 
 class _PageSplashState extends State<PageSplash> {
   final ThemeController themeController = Get.find();
-  final DatabaseController databaseController = Get.put(DatabaseController(), permanent: true);
 
   
   @override
@@ -23,6 +21,15 @@ class _PageSplashState extends State<PageSplash> {
   }
 
   init() async {
+    final database = AppDatabase();
+    await database.into(database.todoItems).insert(TodoItemsCompanion.insert(
+      title: 'todo: finish drift setup',
+      content: 'We can now write queries and define our own tables.',
+    ));
+    List<TodoItem> allItems = await database.select(database.todoItems).get();
+
+    print('items in database: $allItems');
+
     await Future.delayed(const Duration(seconds: 5)); //Simulação de uma chamada API
     Get.offAllNamed('/PageLogin');
   }

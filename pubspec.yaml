@@ -5,34 +5,36 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.0.5 <=4.0.0'
+  sdk: '>=3.5.0 <=4.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
 
-  cupertino_icons: ^1.0.2
-  get: ^4.6.5
-  http: ^1.1.0
-  shared_preferences: ^2.1.0
-  flutter_svg: ^2.0.5
-  flex_color_scheme: ^7.2.0
-  intl: ^0.18.1
-  isar: 3.1.0+1
-  isar_flutter_libs: 3.1.0+1
-  path_provider: ^2.1.0
-  uuid: ^4.1.0
+  cupertino_icons: ^1.0.8
+  get: ^4.6.6
+  http: ^1.2.2
+  shared_preferences: ^2.3.2
+  flutter_svg: ^2.0.11
+  flex_color_scheme: ^7.3.1
+  intl: ^0.19.0
+  path_provider: ^2.1.5
+  uuid: ^4.5.1
+  permission_handler: ^11.3.1
+  drift: ^2.21.0
+  sqlite3: ^2.4.7
 
 
+  drift_flutter: any
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  isar_generator: 3.1.0+1
-  flutter_lints: ^2.0.0
-  build_runner: ^2.4.6
-  flutter_native_splash: ^2.3.2
-  flutter_launcher_icons: ^0.13.1
+  flutter_lints: ^5.0.0
+  build_runner: ^2.4.13
+  flutter_native_splash: ^2.4.2
+  flutter_launcher_icons: ^0.14.1
+  drift_dev: ^2.21.2
 
 
 #flutter pub get
